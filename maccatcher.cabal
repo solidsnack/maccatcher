@@ -1,0 +1,29 @@
+name:               panamatng
+version:            0.0.0
+category:           Text
+license:            GPL
+license-file:       LICENSE
+author:             Jason Dusek
+maintainer:         jason.dusek@gmail.com
+synopsis:           Obtain the host MAC address on *NIX and Windows.
+description:
+  Obtain the host MAC address on *NIX and Windows.
+
+
+cabal-version:      >= 1.2
+build-type:         Simple
+extra-source-files:   README
+                    , samples
+
+
+library
+  build-depends:      base
+                    , haskell98
+                    , binary
+                    , process
+                    , template-haskell
+                    , parsec
+  exposed-modules:  Data.MAC
+                    System.Info.MAC
+                    System.Info.MAC.Fetch
+
