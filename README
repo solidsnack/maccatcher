@@ -1,0 +1,3 @@
+  Utilities for scraping the MAC address via the command line, on *NIX and
+  Windows. The MAC address is cached after the first run.
+
