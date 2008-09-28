@@ -1,4 +1,4 @@
-name:               panamatng
+name:               maccatcher
 version:            0.0.0
 category:           Text
 license:            GPL
@@ -21,7 +21,6 @@ library
                     , haskell98
                     , binary
                     , process
-                    , template-haskell
                     , parsec
   exposed-modules:  Data.MAC
                     System.Info.MAC
