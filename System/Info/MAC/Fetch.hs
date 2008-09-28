@@ -5,33 +5,25 @@
  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -}
 
 
-{-# LANGUAGE TemplateHaskell #-}
-
 module System.Info.MAC.Fetch where
 
 import Data.MAC
 
 import Control.Monad
 import Data.List
-import Language.Haskell.TH
-import Language.Haskell.TH.Syntax
 import System.Process
 import System.Info
 import System.IO
 import Text.ParserCombinators.Parsec
 
 
-{-| Macro to obtain the appropriate hardware MAC fetcher for the operating
- -  system that is hosting the build.
+{-| Obtain the appropriate hardware MAC fetcher for the host operating system.
+ -  This could be inlined, but in practice it is run only once.
  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -}
-fetch                        =  return . VarE . mkName $
+fetch =
     case os of              --  This feels like it should be in IO.
-      "windows"             ->  "win32"
-      "darwin"              ->  "nixen"
-      "linux"               ->  "nixen"
-      "solaris"             ->  "nixen"
-      "freebsd"             ->  "nixen"
-      _                     ->  "nixen"
+      "windows"             ->  win32
+      _                     ->  nixen
 
 
 {-| Obtain the hardware address on @*NIX@ of any kind, using a command line

@@ -5,8 +5,6 @@
  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -}
 
 
-{-# LANGUAGE TemplateHaskell #-}
-
 module System.Info.MAC
   ( new
   , mac
@@ -23,7 +21,7 @@ import System.IO.Unsafe
 {-| Explicitly re-run the MAC catching operation.
  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -}
 new                         ::  IO (Maybe MAC)
-new                          =  $(fetch)
+new                          =  fetch
 
 
 {-| Return a host MAC address, using a cached value if it is available.
