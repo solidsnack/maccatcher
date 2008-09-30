@@ -1,7 +1,7 @@
 name:               maccatcher
 version:            0.0.0
 category:           Text
-license:            GPL
+license:            BSD3
 license-file:       LICENSE
 author:             Jason Dusek
 maintainer:         jason.dusek@gmail.com
@@ -13,6 +13,7 @@ description:
 cabal-version:      >= 1.2
 build-type:         Simple
 extra-source-files:   README
+                    , CONTRIBUTORS
                     , samples
 
 
