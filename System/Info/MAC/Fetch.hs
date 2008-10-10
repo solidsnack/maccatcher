@@ -22,7 +22,7 @@ import Text.ParserCombinators.Parsec
  - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -}
 fetch =
     case os of              --  This feels like it should be in IO.
-      "windows"             ->  win32
+      "mingw32"             ->  win32
       _                     ->  nixen
 
 
