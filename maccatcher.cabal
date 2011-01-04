@@ -16,10 +16,14 @@ extra-source-files:   README
                     , CONTRIBUTORS
                     , samples
 
+flag split-base
 
 library
-  build-depends:      base
-                    , haskell98
+  if flag(split-base)
+    build-depends:    base >= 4 && < 5
+  else
+    build-depends:    base < 4
+  build-depends:      haskell98
                     , binary
                     , process
                     , parsec
