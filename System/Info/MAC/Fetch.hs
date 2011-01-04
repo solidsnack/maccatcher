@@ -43,8 +43,9 @@ nixen                        =  do
 win32                       ::  IO (Maybe MAC)
 win32                        =  do
   (_, o, _, h)              <-  runInteractiveCommand "ipconfig /all"
-  waitForProcess h
   outputs                   <-  hGetContents o
+  seq (length outputs) (return ())
+  waitForProcess h
   return $ join $ ipconfig outputs 
  where
    -- Maybe we don't need this?

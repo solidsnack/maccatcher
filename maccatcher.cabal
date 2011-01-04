@@ -1,10 +1,10 @@
 name:               maccatcher
-version:            1.0.0
+version:            1.0.1
 category:           Text
 license:            BSD3
 license-file:       LICENSE
 author:             Jason Dusek
-maintainer:         jason.dusek@gmail.com
+maintainer:         oss@solidsnack.be
 synopsis:           Obtain the host MAC address on *NIX and Windows.
 description:
   Obtain the host MAC address on *NIX and Windows.
