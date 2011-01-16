@@ -2,12 +2,13 @@
 
 
 {-| Obtain a MAC address for the host system, on *NIX and Windows.
- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -}
+ -}
 
 
 module System.Info.MAC
-  ( new
+  ( refresh
   , mac
+  , macs
   ) where
 
 import Data.MAC
@@ -16,28 +17,35 @@ import System.Info.MAC.Fetch
 import Data.IORef
 import System.IO
 import System.IO.Unsafe
+import Data.Maybe
+import Control.Applicative
 
 
 {-| Explicitly re-run the MAC catching operation.
- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -}
-new                         ::  IO (Maybe MAC)
-new                          =  fetch
+ -}
+refresh                     ::  IO [MAC]
+refresh                      =  do
+  res                       <-  fetchMACs
+  writeIORef fetched res
+  return res
 
 
-{-| Return a host MAC address, using a cached value if it is available.
- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -}
+{-| Fetch MAC address, using a cached value if it is available.
+ -}
 mac                         ::  IO (Maybe MAC)
-mac                          =  do
+mac                          =  listToMaybe <$> macs
+
+
+{-| Fetch MAC addresses, using a cached value if it is available.
+ -}
+macs                        ::  IO [MAC]
+macs                         =  do
   val                       <-  readIORef fetched
-  case val of
-    Nothing                 ->  do
-      res                   <-  new
-      writeIORef fetched res
-      return res
-    _                       ->  return val
+  case val of [ ]           ->  refresh
+              _:_           ->  return val
 
 
 {-# NOINLINE fetched #-}
-fetched                      =  unsafePerformIO $ newIORef Nothing
+fetched                      =  unsafePerformIO $ newIORef []
 
 

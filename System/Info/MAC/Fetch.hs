@@ -1,8 +1,6 @@
-
-
 {-| System specific routines for determing the MAC address and macros to help
- -  sort things out at compile time.
- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -}
+    sort things out at compile time.
+ -}
 
 
 module System.Info.MAC.Fetch where
@@ -10,80 +8,73 @@ module System.Info.MAC.Fetch where
 import Data.MAC
 
 import Control.Monad
+import Control.Applicative
 import Data.List
+import Data.Maybe
 import System.Process
 import System.Info
 import System.IO
 import Text.ParserCombinators.Parsec
 
 
-{-| Obtain the appropriate hardware MAC fetcher for the host operating system.
- -  This could be inlined, but in practice it is run only once.
- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -}
-fetch =
-    case os of              --  This feels like it should be in IO.
-      "mingw32"             ->  win32
-      _                     ->  nixen
+{-| Obtain a list of all available MACs.
+ -}
+fetchMACs                   ::  IO [MAC]
+fetchMACs                    =  parser <$> i_config
 
 
-{-| Obtain the hardware address on @*NIX@ of any kind, using a command line
- -  utility.
- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -}
-nixen                       ::  IO (Maybe MAC)
-nixen                        =  do
-  (_, o, _, h)              <-  runInteractiveCommand "ifconfig"
-  waitForProcess h
-  outputs                   <-  hGetContents o
-  return $ join $ ifconfig outputs 
-
-
- -- TODO Test this thing.
-{-| Obtain the hardware address on Windows, using a command line utility. 
- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -}
-win32                       ::  IO (Maybe MAC)
-win32                        =  do
-  (_, o, _, h)              <-  runInteractiveCommand "ipconfig /all"
+{-| Run @ifconfig@ or @ipconfig@, as appropriate, capturing its output.
+ -}
+i_config                    ::  IO String
+i_config                     =  do
+  (_, o, _, h)              <-  runInteractiveCommand cmd
   outputs                   <-  hGetContents o
   seq (length outputs) (return ())
   waitForProcess h
-  return $ join $ ipconfig outputs 
+  return outputs
  where
-   -- Maybe we don't need this?
-  locations                  =  map (++ "\\ipconfig")
-    [ "c:\\windows\\system32"
-    , "c:\\winnt\\system32"
-    ]
+  cmd | os == "mingw32"      =  "ipconfig /all"
+      | otherwise            =  "ifconfig"
 
 
-{-| Parses the output of Windows @ipconfig@, yielding a Maybe MAC on
- -  succesful parse.
- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -}
-ipconfig                     =  parse' "ipconfig" $ do
-  manyTill anyChar $ try $ string "Physical Address"
-  manyTill anyChar $ char ':'
-  spaces
-  hexen                     <-  sepHex '-'
-  return . maybeMAC . intercalate ":" $ hexen
+parser | os == "mingw32"     =  parse' "ipconfig" ipconfig
+       | otherwise           =  parse' "ifconfig" ifconfig
 
 
-{-| Parses the output of Linux or BSD @ifconfig@, yielding a Maybe MAC on
- -  succesful parse.
- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -}
-ifconfig                     =  parse' "ifconfig" $ do
-  manyTill anyChar markers
-  spaces
-  hexen                     <-  sepHex ':'
-  return . maybeMAC . intercalate ":" $ hexen
+{-| Parses the output of Windows @ipconfig@.
+ -}
+ipconfig                    ::  Parser [MAC]
+ipconfig                     =  parseMACs ((try . string) "Physical Address")
+                                          (manyAnyTill (char ':') >> spaces)
+                                          '-'
+
+
+{-| Parses the output of Linux or BSD @ifconfig@.
+ -}
+ifconfig                    ::  Parser [MAC]
+ifconfig                     =  parseMACs markers spaces ':'
  where
   markers = choice $ map (try . string) [ "ether", "HWaddr" ]
 
 
+parseMAC :: Parser t -> Parser t' -> Char -> Parser (Maybe MAC)
+parseMAC preamble fill c     =  do
+  preamble
+  fill
+  maybeMAC . intercalate ":" <$> sepHex (char c)
 
 
-parse' source parser         =  eitherToMaybe . parse parser source
+parseMACs                   ::  Parser t -> Parser t' -> Char -> Parser [MAC]
+parseMACs preamble fill c    =  catMaybes <$> parseMACs'
  where
-  eitherToMaybe (Left _)     =  Nothing
-  eitherToMaybe (Right r)    =  Just r 
+  parseMACs' = 
+    (skipManyTill anyChar . choice) [ eof >> return []
+                                    , do m <- parseMAC preamble fill c
+                                         (m:) <$> parseMACs' ]
+
+
+parse'                      ::  String -> Parser [t] -> String -> [t]
+parse' source parser         =  either (const []) id . parse parser source
 
 
 maybeMAC                    ::  String -> Maybe MAC
@@ -93,6 +84,11 @@ maybeMAC s =
     _                       ->  Nothing
 
 
-sepHex                       =  sepBy (sequence [hexDigit, hexDigit]) . char
+sepHex                       =  sepBy (sequence [hexDigit, hexDigit])
 
+
+manyAnyTill                  =  manyTill anyChar
+
+
+skipManyTill p end           =  choice [try end, p >> skipManyTill p end]
 
