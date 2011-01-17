@@ -6,9 +6,11 @@
 
 
 module System.Info.MAC
-  ( refresh
-  , mac
+  ( mac
   , macs
+  , nic
+  , nics
+  , refresh
   ) where
 
 import Data.MAC
