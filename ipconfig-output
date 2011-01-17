@@ -1,0 +1,59 @@
+
+Windows IP Configuration
+
+        Host Name . . . . . . . . . . . . : DAVOTS-T61
+        Primary Dns Suffix  . . . . . . . : coverity.com
+        Node Type . . . . . . . . . . . . : Hybrid
+        IP Routing Enabled. . . . . . . . : No
+        WINS Proxy Enabled. . . . . . . . : No
+        DNS Suffix Search List. . . . . . : coverity.com
+                                            hsd1.ca.comcast.net.
+
+Ethernet adapter VMware Network Adapter VMnet8:
+
+        Connection-specific DNS Suffix  . : 
+        Description . . . . . . . . . . . : VMware Virtual Ethernet Adapter for VMnet8
+        Physical Address. . . . . . . . . : 00-50-56-C0-00-08
+        Dhcp Enabled. . . . . . . . . . . : No
+        IP Address. . . . . . . . . . . . : 192.168.22.1
+        Subnet Mask . . . . . . . . . . . : 255.255.255.0
+        Default Gateway . . . . . . . . . : 
+
+Ethernet adapter VMware Network Adapter VMnet1:
+
+        Connection-specific DNS Suffix  . : 
+        Description . . . . . . . . . . . : VMware Virtual Ethernet Adapter for VMnet1
+        Physical Address. . . . . . . . . : 00-50-56-C0-00-01
+        Dhcp Enabled. . . . . . . . . . . : No
+        IP Address. . . . . . . . . . . . : 192.168.207.1
+        Subnet Mask . . . . . . . . . . . : 255.255.255.0
+        Default Gateway . . . . . . . . . : 
+
+Ethernet adapter Wireless Network Connection:
+
+        Connection-specific DNS Suffix  . : hsd1.ca.comcast.net.
+        Description . . . . . . . . . . . : Intel(R) Wireless WiFi Link 4965AGN
+        Physical Address. . . . . . . . . : 00-1F-3B-05-6F-67
+        Dhcp Enabled. . . . . . . . . . . : Yes
+        Autoconfiguration Enabled . . . . : Yes
+        IP Address. . . . . . . . . . . . : 192.168.23.106
+        Subnet Mask . . . . . . . . . . . : 255.255.255.0
+        Default Gateway . . . . . . . . . : 192.168.23.1
+        DHCP Server . . . . . . . . . . . : 192.168.23.1
+        DNS Servers . . . . . . . . . . . : 192.168.23.1
+                                            68.87.76.182
+                                            68.87.78.134
+        Lease Obtained. . . . . . . . . . : Sunday, January 16, 2011 2:48:46 PM
+        Lease Expires . . . . . . . . . . : Monday, January 17, 2011 2:48:46 PM
+
+Ethernet adapter Local Area Connection:
+
+        Media State . . . . . . . . . . . : Media disconnected
+        Description . . . . . . . . . . . : Intel(R) 82566MM Gigabit Network Connection
+        Physical Address. . . . . . . . . : 00-1E-37-90-81-3B
+
+Ethernet adapter Local Area Connection 2:
+
+        Media State . . . . . . . . . . . : Media disconnected
+        Description . . . . . . . . . . . : TAP-Win32 Adapter V8
+        Physical Address. . . . . . . . . : 00-FF-B2-5B-BE-9D
