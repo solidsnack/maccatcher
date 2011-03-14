@@ -104,12 +104,15 @@ maybeMAC s =
 sepHex                       =  sepBy (sequence [hexDigit, hexDigit])
 
 
+manyAnyTill                 ::  Parser Char -> Parser String
 manyAnyTill                  =  manyTill anyChar
 
 
+skipManyTill                ::  Parser a -> Parser b -> Parser b
 skipManyTill p end           =  choice [try end, p >> skipManyTill p end]
 
 
+skipManyAnyTill             ::  Parser a -> Parser a
 skipManyAnyTill              =  skipManyTill anyChar
 
 
