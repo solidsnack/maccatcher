@@ -5,6 +5,7 @@ license:            BSD3
 license-file:       LICENSE
 author:             Jason Dusek
 maintainer:         oss@solidsnack.be
+source-repository:  git://github.com/solidsnack/maccatcher.git
 synopsis:           Obtain the host MAC address on *NIX and Windows.
 description:
   Obtain the host MAC address on *NIX and Windows.
