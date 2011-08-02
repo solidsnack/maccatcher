@@ -36,7 +36,7 @@ i_config                     =  do
   return outputs
  where
   cmd | os == "mingw32"      =  "ipconfig /all"
-      | otherwise            =  "ifconfig"
+      | otherwise            =  "LANG=C ifconfig"
 
 
 
