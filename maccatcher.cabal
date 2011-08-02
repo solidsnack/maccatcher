@@ -9,15 +9,15 @@ synopsis:           Obtain the host MAC address on *NIX and Windows.
 description:
   Obtain the host MAC address on *NIX and Windows.
 
-source-repository   head
-  type:             git
-  location:         http://github.com/solidsnack/maccatcher.git
-
-cabal-version:      >= 1.2
+cabal-version:      >= 1.6
 build-type:         Simple
 extra-source-files:   README
                     , CONTRIBUTORS
                     , samples
+
+source-repository   head
+  type:             git
+  location:         http://github.com/solidsnack/maccatcher.git
 
 flag split-base
 
