@@ -1,11 +1,9 @@
 
 {-| A MAC address datatype, representing the six bytes of a MAC address, also
- -  known as an OID, IAB or "...Vendor Address, Vendor ID, NIC Address,
- -  Ethernet Address and others.".
- -
- -
- -  <http://standards.ieee.org/faqs/OUI.html#q4>
- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -}
+    known as an OID, IAB or \"...Vendor Address, Vendor ID, NIC Address,
+    Ethernet Address and others.\", see
+    <http://standards.ieee.org/faqs/OUI.html#q4>
+ -}
 
 module Data.MAC where
 
