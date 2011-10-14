@@ -22,7 +22,7 @@ source-repository   head
 flag split-base
 
 library
-  build-depends:      base
+  build-depends:      base >= 3 && < 5
                     , binary
                     , process
                     , parsec
