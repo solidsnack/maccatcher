@@ -22,11 +22,7 @@ source-repository   head
 flag split-base
 
 library
-  if flag(split-base)
-    build-depends:    base >= 4 && < 5
-  else
-    build-depends:    base < 4
-  build-depends:      haskell98
+  build-depends:      base
                     , binary
                     , process
                     , parsec
