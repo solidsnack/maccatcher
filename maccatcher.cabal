@@ -1,5 +1,5 @@
 name:               maccatcher
-version:            2.1.4
+version:            2.1.5
 category:           Text
 license:            BSD3
 license-file:       LICENSE
@@ -21,6 +21,10 @@ source-repository   head
 
 flag split-base
 
+flag cli
+  description:      Enable command line tool.
+  default:          False
+
 library
   build-depends:      base >= 3 && < 5
                     , binary
@@ -33,4 +37,8 @@ library
 
 executable          maccatcher
   main-is:          MACCatcher.hs 
+  if flag(cli)
+    buildable:      True
+  else
+    buildable:      False
 
