@@ -16,6 +16,7 @@ import Foreign.Storable
 import Data.Binary
 import Data.Binary.Put
 import Data.Binary.Get
+import Data.ByteString.Char8 (ByteString, pack, unpack)
 import Text.Printf
 import Text.Read
 import qualified Text.Read.Lex as Rex
@@ -76,4 +77,10 @@ instance Storable MAC where
     pokeByteOff p 4 e
     pokeByteOff p 5 f
 
+toByteString :: MAC -> ByteString
+toByteString = pack . show
 
+fromByteString :: ByteString -> Maybe MAC
+fromByteString mac = case readsPrec 0 (unpack mac) of
+                       [(addr,_)] -> Just addr
+                       _          -> Nothing
