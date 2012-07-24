@@ -81,6 +81,7 @@ toByteString :: MAC -> ByteString
 toByteString = pack . show
 
 fromByteString :: ByteString -> Maybe MAC
-fromByteString mac = case readsPrec 0 (unpack mac) of
-                       [(addr,_)] -> Just addr
-                       _          -> Nothing
+fromByteString mac
+    = case [x | (x,t) <- reads (unpack mac), ("","") <- lex t] of
+        [x] -> Just x
+        _   -> Nothing
